@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "./pb";
+
+enum MsgId {
+  Undefined = 0;
+  Login = 1;
+  Greet = 2;
+}

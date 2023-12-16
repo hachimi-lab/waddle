@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "./pb";
+
+message LoginCode {
+  enum Code {
+    OK = 0;
+    Failed = 1;
+    IncorrectAccountOrPassword = 2;
+  }
+}
+
+message LoginReq {
+  int64 account = 1;
+  string password = 2;
+}
+
+message LoginAck {
+  LoginCode.Code code = 1;
+  int64 account = 2;
+  string token = 3;
+}
+
+message GreetReq {
+  string name = 1;
+}

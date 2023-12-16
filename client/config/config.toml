@@ -1,0 +1,29 @@
+[cluster]
+    [cluster.client]
+        id = ""
+        name = "client"
+        codec = "proto"
+[packet]
+    endian = "big"
+    seqBytesLen = 2
+    routeBytesLen = 2
+[log]
+    file = "./log/due.log"
+    level = "info"
+    format = "json"
+    stdout = true
+    timeFormat = "2006/01/02 15:04:05.000000"
+    stackLevel = "error"
+    fileMaxAge = "7d"
+    fileMaxSize = 100
+    fileCutRule = "day"
+    callerFullPath = true
+    classifiedStorage = true
+[network]
+    [network.ws]
+        [network.ws.client]
+        url = "ws://127.0.0.1:3553"
+        maxMsgLen = 1024
+        handshakeTimeout = 10
+        heartbeat = true
+        heartbeatInterval = 10

@@ -1,0 +1,49 @@
+[cluster]
+    [cluster.gate]
+        id = "gate"
+        name = "gate"
+[packet]
+    endian = "big"
+    seqBytesLen = 2
+    routeBytesLen = 2
+[log]
+    file = "./log/due.log"
+    level = "debug"
+    format = "json"
+    stdout = true
+    timeFormat = "2006/01/02 15:04:05.000000"
+    stackLevel = "error"
+    fileMaxAge = "7d"
+    fileMaxSize = 100
+    fileCutRule = "day"
+    callerFullPath = true
+    classifiedStorage = true
+[network]
+    [network.ws]
+        [network.ws.server]
+            addr = ":3553"
+            path = "/"
+            maxMsgLen = 1024
+            maxConnNum = 5000
+            keyFile = ""
+            certFile = ""
+            origins = ["*"]
+            heartbeatCheck = true
+            heartbeatCheckInterval = 10
+            handshakeTimeout = 10
+[locate]
+    [locate.redis]
+        addrs = ["127.0.0.1:6379"]
+        db = 0
+        username = ""
+        password = "dangerous"
+        maxRetries = 3
+        prefix = "due"
+[registry]
+    [registry.etcd]
+    addrs = ["127.0.0.1:2379"]
+    dialTimeout = 5
+    namespace = "services"
+    timeout = 3
+    retryTimes = 3
+    retryInterval = 10
