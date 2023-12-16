@@ -25,21 +25,21 @@ func (slf *Login) Init() {
 
 func wrap[T, S proto.Message](fn func(ctx *node.Context, in T, out S)) func(ctx *node.Context) {
 	return func(ctx *node.Context) {
-		reqType := reflect.TypeOf((*T)(nil)).Elem().Elem()
-		ackType := reflect.TypeOf((*S)(nil)).Elem().Elem()
-		noneType := reflect.TypeOf((*pb.None)(nil)).Elem()
+		reqTyp := reflect.TypeOf((*T)(nil)).Elem().Elem()
+		ackTyp := reflect.TypeOf((*S)(nil)).Elem().Elem()
+		emptyTyp := reflect.TypeOf((*pb.Empty)(nil)).Elem()
 
-		req := reflect.New(reqType).Interface().(T)
-		ack := reflect.New(ackType).Interface().(S)
+		req := reflect.New(reqTyp).Interface().(T)
+		ack := reflect.New(ackTyp).Interface().(S)
 
-		if reqType != noneType {
+		if reqTyp != emptyTyp {
 			if err := ctx.Request.Parse(req); err != nil {
 				log.Errorf("parse message failed: %v", err)
 				_ = ctx.Disconnect(true)
 				return
 			}
 		}
-		if ackType != noneType {
+		if ackTyp != emptyTyp {
 			defer func() {
 				if err := ctx.Response(ack); err != nil {
 					log.Errorf("response message failed: %v", err)
@@ -66,6 +66,6 @@ func (slf *Login) doLogin(ctx *node.Context, req *pb.LoginReq, ack *pb.LoginAck)
 	ack.Token = "token"
 }
 
-func (slf *Login) doGreet(ctx *node.Context, req *pb.GreetReq, ack *pb.None) {
+func (slf *Login) doGreet(ctx *node.Context, req *pb.GreetReq, _ *pb.Empty) {
 	log.Infof("hi %s", req.GetName())
 }
